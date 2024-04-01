@@ -7,6 +7,8 @@ import cherry.company.client_intake_app.App
 
 fun main() = application {
     Window(
+        //This is where the app could be "initialized" by the eventual end-user to be in-line with
+        //their company/business/practice
         title = "Client_Intake_App",
         state = rememberWindowState(width = 800.dp, height = 600.dp),
         onCloseRequest = ::exitApplication,

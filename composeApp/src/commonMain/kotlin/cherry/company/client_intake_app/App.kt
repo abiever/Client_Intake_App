@@ -62,7 +62,7 @@ internal fun App() = AppTheme {
                 Icon(vectorResource(Res.drawable.ic_rotate_right), contentDescription = null)
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
                 Text(
-                    stringResource(if (isAnimate) Res.string.stop else Res.string.run)
+                    (if (!isAnimate) "Start" else "Stop") //Just "text" seems to work!
                 )
             }
         )
@@ -79,7 +79,7 @@ internal fun App() = AppTheme {
             content = {
                 Icon(vectorResource(icon), contentDescription = null)
                 Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text(stringResource(Res.string.theme))
+                Text("Switch Theme")
             }
         )
 
@@ -88,6 +88,24 @@ internal fun App() = AppTheme {
             onClick = { openUrl("https://github.com/terrakok") },
         ) {
             Text(stringResource(Res.string.open_github))
+        }
+
+        //Just playing with some new buttons below
+        val count = remember { mutableStateOf(0) }
+        Button(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            onClick = {
+                count.value++
+            }
+        ) {
+            Text(if (count.value == 0) "Hello World!" else "You've clicked ${count.value} times!")
+        }
+
+        Button(modifier = Modifier.align(Alignment.CenterHorizontally),
+            onClick = {
+                count.value = 0
+            }) {
+            Text("Reset")
         }
     }
 }
