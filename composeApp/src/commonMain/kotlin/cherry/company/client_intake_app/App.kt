@@ -107,6 +107,15 @@ internal fun App() = AppTheme {
             }) {
             Text("Reset")
         }
+
+        //Trying to create some text fields
+        val name = remember { mutableStateOf(("")) }
+        TextField(
+            value = name.value,
+            singleLine = true,
+            onValueChange = {name.value = it},
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
