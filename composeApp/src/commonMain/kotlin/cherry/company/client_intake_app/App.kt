@@ -33,40 +33,6 @@ internal fun App() = AppTheme {
             style = MaterialTheme.typography.displayLarge
         )
 
-        var isAnimate by remember { mutableStateOf(false) }
-        val transition = rememberInfiniteTransition()
-        val rotate by transition.animateFloat(
-            initialValue = 0f,
-            targetValue = 360f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(1000, easing = LinearEasing)
-            )
-        )
-
-        Image(
-            modifier = Modifier
-                .size(250.dp)
-                .padding(16.dp)
-                .run { if (isAnimate) rotate(rotate) else this },
-            imageVector = vectorResource(Res.drawable.ic_cyclone),
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
-            contentDescription = null
-        )
-
-        ElevatedButton(
-            modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 4.dp)
-                .widthIn(min = 200.dp),
-            onClick = { isAnimate = !isAnimate },
-            content = {
-                Icon(vectorResource(Res.drawable.ic_rotate_right), contentDescription = null)
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text(
-                    (if (!isAnimate) "Start" else "Stop") //Just "text" seems to work!
-                )
-            }
-        )
-
         var isDark by LocalThemeIsDark.current
         val icon = remember(isDark) {
             if (isDark) Res.drawable.ic_light_mode
@@ -82,13 +48,6 @@ internal fun App() = AppTheme {
                 Text("Switch Theme")
             }
         )
-
-        TextButton(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp).widthIn(min = 200.dp),
-            onClick = { openUrl("https://github.com/terrakok") },
-        ) {
-            Text(stringResource(Res.string.open_github))
-        }
 
         //Just playing with some new buttons below
         val count = remember { mutableStateOf(0) }
@@ -109,13 +68,22 @@ internal fun App() = AppTheme {
         }
 
         //Trying to create some text fields
-        val name = remember { mutableStateOf(("")) }
+        var name by remember { mutableStateOf(("")) }
         TextField(
-            value = name.value,
+            value = name,
             singleLine = true,
-            onValueChange = {name.value = it},
-            modifier = Modifier.fillMaxWidth()
+            onValueChange = { name = it },
+            modifier = Modifier.padding(20.dp)
         )
+
+        //Use this button to "save" the name to a field on the app for the time being
+        val isClicked = remember { mutableStateOf(false) }
+        Button(modifier = Modifier.align(Alignment.CenterHorizontally),
+            onClick = {
+                isClicked.value = !isClicked.value
+            }) {
+            Text(if (isClicked.value) name else "Save Name")
+        }
     }
 }
 
