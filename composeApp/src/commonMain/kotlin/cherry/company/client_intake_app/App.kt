@@ -1,8 +1,6 @@
 package cherry.company.client_intake_app
 
-import androidx.compose.animation.core.*
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,18 +8,16 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import client_intake_app.composeapp.generated.resources.*
 import cherry.company.client_intake_app.theme.AppTheme
 import cherry.company.client_intake_app.theme.LocalThemeIsDark
 import org.jetbrains.compose.resources.Font
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun App() = AppTheme {
     Column(
@@ -33,7 +29,7 @@ internal fun App() = AppTheme {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(Res.string.cyclone),
+            text = "Cherry Healing Center", //This could be changed to something less hard-coded?
             fontFamily = FontFamily(Font(Res.font.IndieFlower_Regular)),
             style = MaterialTheme.typography.displayLarge
         )
@@ -54,66 +50,46 @@ internal fun App() = AppTheme {
             }
         )
 
-        //Just playing with some new buttons below
-        val count = remember { mutableStateOf(0) }
-        Button(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = {
-                count.value++
-            }
-        ) {
-            Text(if (count.value == 0) "Hello World!" else "You've clicked ${count.value} times!")
-        }
-
-        Button(modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = {
-                count.value = 0
-            }) {
-            Text("Reset")
-        }
-
         //Trying to create some text fields
         var firstName by remember { mutableStateOf(("")) }
         TextField(
             value = firstName,
+            label = { Text("First Name") },
             singleLine = true,
             onValueChange = { firstName = it },
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier
+                .padding(20.dp)
+//                .clickable() //TODO: add 'clickable' to remove text
+            // https://stackoverflow.com/questions/68482228/how-to-clear-textfield-value-in-jetpack-compose
         )
 
         var lastName by remember { mutableStateOf(("")) }
         TextField(
             value = lastName,
+            label = { Text("Last Name") },
             singleLine = true,
             onValueChange = { lastName = it },
             modifier = Modifier.padding(20.dp)
         )
 
-        //TODO: This would probably be better as "birthday", as age will change with time
-        var age by remember { mutableStateOf(("")) }
+        var birthDate by remember { mutableStateOf(("")) }
         TextField(
-            value = age,
+            value = birthDate,
+            label = { Text("Date of Birth") },
+            placeholder = { Text("MM/DD/YYYY")},
             singleLine = true,
-            onValueChange = { value ->
-                if (value.toInt() < 120) {
-                    age = value.filter { it.isDigit()}
-                }
-            },
+            onValueChange = { birthDate = it },
             modifier = Modifier.padding(20.dp)
-            //ISSUE: Doesn't allow for backspacing to empty field?
         )
-
-        val state = rememberDatePickerState(initialDisplayMode = DisplayMode.Input)
-        DatePicker(state = state, modifier = Modifier.padding(16.dp))
-        Text("Entered date timestamp: ${state.selectedDateMillis ?: "no input"}")
 
         //Use this button to "save" the name to a field on the app for the time being
         val isClicked = remember { mutableStateOf(false) }
         Button(modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
                 isClicked.value = !isClicked.value
+                //TODO: Create new Client object here and have it show up on a 'dashboard' in the app view
             }) {
-            Text(if (isClicked.value) firstName + lastName + age else "Save Client")
+            Text(if (isClicked.value) firstName + lastName + birthDate else "Save Client")
         }
 
         //Todo: add dropdown and radio buttons
