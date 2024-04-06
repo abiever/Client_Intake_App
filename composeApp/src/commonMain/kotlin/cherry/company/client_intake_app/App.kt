@@ -2,7 +2,10 @@ package cherry.company.client_intake_app
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,11 +21,13 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.resources.vectorResource
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun App() = AppTheme {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -68,13 +73,39 @@ internal fun App() = AppTheme {
         }
 
         //Trying to create some text fields
-        var name by remember { mutableStateOf(("")) }
+        var firstName by remember { mutableStateOf(("")) }
         TextField(
-            value = name,
+            value = firstName,
             singleLine = true,
-            onValueChange = { name = it },
+            onValueChange = { firstName = it },
             modifier = Modifier.padding(20.dp)
         )
+
+        var lastName by remember { mutableStateOf(("")) }
+        TextField(
+            value = lastName,
+            singleLine = true,
+            onValueChange = { lastName = it },
+            modifier = Modifier.padding(20.dp)
+        )
+
+        //TODO: This would probably be better as "birthday", as age will change with time
+        var age by remember { mutableStateOf(("")) }
+        TextField(
+            value = age,
+            singleLine = true,
+            onValueChange = { value ->
+                if (value.toInt() < 120) {
+                    age = value.filter { it.isDigit()}
+                }
+            },
+            modifier = Modifier.padding(20.dp)
+            //ISSUE: Doesn't allow for backspacing to empty field?
+        )
+
+        val state = rememberDatePickerState(initialDisplayMode = DisplayMode.Input)
+        DatePicker(state = state, modifier = Modifier.padding(16.dp))
+        Text("Entered date timestamp: ${state.selectedDateMillis ?: "no input"}")
 
         //Use this button to "save" the name to a field on the app for the time being
         val isClicked = remember { mutableStateOf(false) }
@@ -82,8 +113,12 @@ internal fun App() = AppTheme {
             onClick = {
                 isClicked.value = !isClicked.value
             }) {
-            Text(if (isClicked.value) name else "Save Name")
+            Text(if (isClicked.value) firstName + lastName + age else "Save Client")
         }
+
+        //Todo: add dropdown and radio buttons
+        //TODO: Create a basic "client" class and see if I can save basic info to it, then recall it
+            //The data can be saved in the app or on the hosting machine itself for now
     }
 }
 
