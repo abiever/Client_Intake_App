@@ -93,9 +93,10 @@ internal fun App() = AppTheme {
         val isClicked = remember { mutableStateOf(false) }
         Button(modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
-                //TODO: Create new Client object here and have it show up on a 'dashboard' in the app view
                 val client = Client(firstName, lastName, birthDate)
                 clientsList.add(client)
+                //The below 'resets' the text fields with empty strings
+                //TODO: Disallow the form from being submitted if input is ONLY ""
                 firstName = ""
                 lastName = ""
                 birthDate = ""
@@ -103,16 +104,33 @@ internal fun App() = AppTheme {
             Text("Create Client")
         }
 
-        //This is working now and displaying name
-        if (clientsList.size > 0) {
+        if (clientsList.isNotEmpty()) {
             for (client in clientsList) {
-                Text(text = client.getFirstName() + clientsList.size.toString())
-                //TODO: Try to turn this into a button to return more info??
+                // Use a composable function to create the button
+                ShowMoreButton(client = client)
             }
         }
 
+
         //Todo: add dropdown and radio buttons
         //The data can be saved in the app or on the hosting machine itself for now
+    }
+}
+
+@Composable
+fun ShowMoreButton(client: Client) {
+    // State to track whether the button is clicked
+    val expanded = remember { mutableStateOf(false) }
+
+    Button(
+        onClick = { expanded.value = true }
+    ) {
+        Text("Show More")
+    }
+
+    // Display additional content when the button is clicked
+    if (expanded.value) {
+        Text(text = client.getBirthDate())
     }
 }
 
