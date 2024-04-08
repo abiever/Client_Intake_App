@@ -20,6 +20,13 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 internal fun App() = AppTheme {
+
+    val clientsList = remember { mutableStateListOf<Client>() } // Use mutableStateListOf instead of mutableListOf
+    // State variable to hold the list size
+    var listSize by remember { mutableStateOf(0) }
+
+    //Insert row here?
+    //TODO: Make 2 columns side by side, where one column displays the input fields, and the other displays already created clients
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -86,16 +93,32 @@ internal fun App() = AppTheme {
         val isClicked = remember { mutableStateOf(false) }
         Button(modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
-                isClicked.value = !isClicked.value
                 //TODO: Create new Client object here and have it show up on a 'dashboard' in the app view
+                val client = Client(firstName, lastName, birthDate)
+                clientsList.add(client)
+                firstName = ""
+                lastName = ""
+                birthDate = ""
             }) {
-            Text(if (isClicked.value) firstName + lastName + birthDate else "Save Client")
+            Text("Create Client")
         }
+
+        //This is working now and displaying name
+        if (clientsList.size > 0) {
+            for (client in clientsList) {
+                Text(text = client.getFirstName())
+                //TODO: Try to turn this into a button to return more info??
+            }
+        }
+
+        // Display the updated list size using Text() composable
+        Text(text = listSize.toString())
 
         //Todo: add dropdown and radio buttons
         //TODO: Create a basic "client" class and see if I can save basic info to it, then recall it
-            //The data can be saved in the app or on the hosting machine itself for now
+        //The data can be saved in the app or on the hosting machine itself for now
     }
 }
+
 
 internal expect fun openUrl(url: String?)
