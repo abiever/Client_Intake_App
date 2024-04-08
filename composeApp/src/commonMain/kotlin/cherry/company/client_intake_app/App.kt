@@ -106,16 +106,12 @@ internal fun App() = AppTheme {
         //This is working now and displaying name
         if (clientsList.size > 0) {
             for (client in clientsList) {
-                Text(text = client.getFirstName())
+                Text(text = client.getFirstName() + clientsList.size.toString())
                 //TODO: Try to turn this into a button to return more info??
             }
         }
 
-        // Display the updated list size using Text() composable
-        Text(text = listSize.toString())
-
         //Todo: add dropdown and radio buttons
-        //TODO: Create a basic "client" class and see if I can save basic info to it, then recall it
         //The data can be saved in the app or on the hosting machine itself for now
     }
 }
