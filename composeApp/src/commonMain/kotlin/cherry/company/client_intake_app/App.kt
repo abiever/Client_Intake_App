@@ -23,7 +23,6 @@ internal fun App() = AppTheme {
 
     val clientsList = remember { mutableStateListOf<Client>() } // Use mutableStateListOf instead of mutableListOf
     // State variable to hold the list size
-    var listSize by remember { mutableStateOf(0) }
 
     //Insert row here?
     //TODO: Make 2 columns side by side, where one column displays the input fields, and the other displays already created clients
@@ -57,25 +56,33 @@ internal fun App() = AppTheme {
             }
         )
 
-        //Trying to create some text fields
         var firstName by remember { mutableStateOf(("")) }
         TextField(
             value = firstName,
-            label = { Text("First Name") },
+            label = { Text("Enter First Name:") },
             singleLine = true,
             onValueChange = { firstName = it },
-            modifier = Modifier
-                .padding(20.dp)
-//                .clickable() //TODO: add 'clickable' to remove text
-            // https://stackoverflow.com/questions/68482228/how-to-clear-textfield-value-in-jetpack-compose
+            isError = firstName.isNotEmpty() && !isValidName(firstName),
+            supportingText = {
+                if (firstName.isNotEmpty() && !isValidName(firstName)) {
+                    Text("Please enter a valid first name")
+                }
+            },
+            modifier = Modifier.padding(20.dp)
         )
 
         var lastName by remember { mutableStateOf(("")) }
         TextField(
             value = lastName,
-            label = { Text("Last Name") },
+            label = { Text("Enter Last Name:") },
             singleLine = true,
             onValueChange = { lastName = it },
+            isError = lastName.isNotEmpty() && !isValidName(lastName),
+            supportingText = {
+                if (lastName.isNotEmpty() && !isValidName(lastName)) {
+                    Text("Please enter a valid last name")
+                }
+            },
             modifier = Modifier.padding(20.dp)
         )
 
@@ -86,6 +93,12 @@ internal fun App() = AppTheme {
             placeholder = { Text("MM/DD/YYYY")},
             singleLine = true,
             onValueChange = { birthDate = it },
+            isError = birthDate.isNotEmpty() && !isValidBirthDate(birthDate),
+            supportingText = {
+                if (birthDate.isNotEmpty() && !isValidBirthDate(birthDate)) {
+                    Text("Please enter a valid birth date")
+                }
+            },
             modifier = Modifier.padding(20.dp)
         )
 
@@ -134,5 +147,17 @@ fun ShowMoreButton(client: Client) {
     }
 }
 
+fun isValidName(name: String): Boolean {
+    return name.matches(Regex("^[A-Za-z'-]{2,20}\$"))
+}
+
+fun isValidBirthDate(birthDate: String): Boolean {
+    return birthDate.matches(Regex("^(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(19|20)\\d{2}\$\n"))
+}
+
+fun isValidClientInfo(): Boolean {
+    //TODO: Potentially use this to validate all inputted client info at once when doing the final button click needed to "create" a new client
+    return true
+}
 
 internal expect fun openUrl(url: String?)
