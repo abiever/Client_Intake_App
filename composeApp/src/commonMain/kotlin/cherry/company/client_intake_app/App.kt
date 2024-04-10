@@ -106,13 +106,17 @@ internal fun App() = AppTheme {
         val isClicked = remember { mutableStateOf(false) }
         Button(modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
-                val client = Client(firstName, lastName, birthDate)
-                clientsList.add(client)
-                //The below 'resets' the text fields with empty strings
-                //TODO: Disallow the form from being submitted if input is ONLY ""
-                firstName = ""
-                lastName = ""
-                birthDate = ""
+                //isValidClientInfo() is used here to validate all client info at once
+                //prevents button click if data does not pass validation
+                if (isValidClientInfo(firstName, lastName, birthDate)) {
+                    val client = Client(firstName, lastName, birthDate)
+                    clientsList.add(client)
+                    //The below 'resets' the text fields with empty strings
+                    //TODO: Disallow the form from being submitted if input is ONLY ""
+                    firstName = ""
+                    lastName = ""
+                    birthDate = ""
+                }
             }) {
             Text("Create Client")
         }
@@ -123,7 +127,6 @@ internal fun App() = AppTheme {
                 ShowMoreButton(client = client)
             }
         }
-
 
         //Todo: add dropdown and radio buttons
         //The data can be saved in the app or on the hosting machine itself for now
@@ -155,9 +158,12 @@ fun isValidBirthDate(birthDate: String): Boolean {
     return birthDate.matches(Regex("^(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(19|20)\\d{2}\$\n"))
 }
 
-fun isValidClientInfo(): Boolean {
-    //TODO: Potentially use this to validate all inputted client info at once when doing the final button click needed to "create" a new client
-    return true
+//use this to validate all inputted client info at once when doing the final button click needed to "create" a new client
+fun isValidClientInfo(firstName: String, lastName: String, birthDate: String): Boolean {
+    //Add validation function as needed below
+    return isValidName(firstName) &&
+            isValidName(lastName) &&
+            isValidBirthDate(birthDate)
 }
 
 internal expect fun openUrl(url: String?)
