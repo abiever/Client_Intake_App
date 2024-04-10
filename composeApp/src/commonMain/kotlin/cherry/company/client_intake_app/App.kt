@@ -3,6 +3,7 @@ package cherry.company.client_intake_app
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -120,6 +121,31 @@ internal fun App() = AppTheme {
             Text("Create Client")
         }
 
+        val radioOptions = listOf("A", "B", "C")
+        val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[1] ) }
+            radioOptions.forEach { text ->
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .selectable(
+                            selected = (text == selectedOption),
+                            onClick = {
+                                onOptionSelected(text)
+                            }
+                        )
+                        .padding(horizontal = 16.dp)
+                ) {
+                    RadioButton(
+                        selected = (text == selectedOption),
+                        onClick = { onOptionSelected(text) }
+                    )
+                    Text(
+                        text = text,
+                        modifier = Modifier.padding(start = 16.dp)
+                    )
+                }
+            }
+
         if (clientsList.isNotEmpty()) {
             for (client in clientsList) {
                 // Use a composable function to create the button
@@ -145,7 +171,7 @@ fun ShowMoreButton(client: Client) {
 
     // Display additional content when the button is clicked
     if (expanded.value) {
-        Text(text = client.getFirstName() + " " + client.getLastName() + "'s birth day is " + client.getBirthDate())
+        Text(text = client.getFirstName() + " " + client.getLastName() + "'s birthday is " + client.getBirthDate())
     }
 }
 
@@ -162,7 +188,7 @@ fun isValidBirthDate(birthDate: String): Boolean {
 //use this to validate all inputted client info at once when doing the final button click needed to "create" a new client
 fun isValidClientInfo(firstName: String, lastName: String, birthDate: String): Boolean {
     //Add validation function as needed below
-    return isValidName(firstName) &&
+    return  isValidName(firstName) &&
             isValidName(lastName) &&
             isValidBirthDate(birthDate)
 }
