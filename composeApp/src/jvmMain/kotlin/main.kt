@@ -10,10 +10,10 @@ fun main() = application {
         //This is where the app could be "initialized" by the eventual end-user to be in-line with
         //their company/business/practice
         title = "Client_Intake_App",
-        state = rememberWindowState(width = 800.dp, height = 600.dp),
+        state = rememberWindowState(width = 1200.dp, height = 600.dp),
         onCloseRequest = ::exitApplication,
     ) {
-        window.minimumSize = Dimension(350, 600)
+        window.minimumSize = Dimension(850, 600)
         App()
     }
 }

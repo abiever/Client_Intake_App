@@ -104,7 +104,7 @@ internal fun App() = AppTheme {
         )
 
         //Use this button to "save" the name to a field on the app for the time being
-        val isClicked = remember { mutableStateOf(false) }
+        //val isClicked = remember { mutableStateOf(false) }
         Button(modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
                 //isValidClientInfo() is used here to validate all client info at once
@@ -121,30 +121,37 @@ internal fun App() = AppTheme {
             Text("Create Client")
         }
 
-        val radioOptions = listOf("A", "B", "C")
+        //TODO: Create a way to save this info & health issues to each instance of a Client()
+        Text("How much did pain interfere with your enjoyment of life?")
+        val radioOptions = listOf("Not at all", "A little bit", "Somewhat", "Quite a bit", "Very much")
         val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[1] ) }
+        Row {
             radioOptions.forEach { text ->
                 Row(
                     Modifier
-                        .fillMaxWidth()
                         .selectable(
                             selected = (text == selectedOption),
                             onClick = {
                                 onOptionSelected(text)
                             }
                         )
-                        .padding(horizontal = 16.dp)
+                        .padding(vertical = 16.dp)
                 ) {
                     RadioButton(
                         selected = (text == selectedOption),
-                        onClick = { onOptionSelected(text) }
+                        onClick = { onOptionSelected(text) },
                     )
                     Text(
                         text = text,
-                        modifier = Modifier.padding(start = 16.dp)
+                        modifier = Modifier.padding(start = 8.dp) // Adjust padding as needed
                     )
                 }
             }
+        }
+
+        //TODO: Add modifier to text to be "heading" size and edit options for health issues options
+        Text("Any general health issues?")
+        CheckableRow()
 
         if (clientsList.isNotEmpty()) {
             for (client in clientsList) {
@@ -192,5 +199,28 @@ fun isValidClientInfo(firstName: String, lastName: String, birthDate: String): B
             isValidName(lastName) &&
             isValidBirthDate(birthDate)
 }
+
+@Composable
+fun CheckableRow() {
+    MaterialTheme {
+        val options = listOf("Option 1", "Option 2", "Option 3") // Add more options as needed
+        val checkedState = remember { mutableStateListOf<Boolean>().apply { repeat(options.size) { add(false) } } }
+
+        Column {
+            options.forEachIndexed { index, option ->
+                Row(
+                    Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .clickable(onClick = { checkedState[index] = !checkedState[index] })
+                ) {
+                    Text(option, Modifier.weight(1f))
+                    Checkbox(checked = checkedState[index], onCheckedChange = { checkedState[index] = it })
+                }
+            }
+        }
+    }
+}
+
 
 internal expect fun openUrl(url: String?)
