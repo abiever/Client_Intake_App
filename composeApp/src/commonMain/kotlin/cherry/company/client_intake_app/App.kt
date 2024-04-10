@@ -112,7 +112,6 @@ internal fun App() = AppTheme {
                     val client = Client(firstName, lastName, birthDate)
                     clientsList.add(client)
                     //The below 'resets' the text fields with empty strings
-                    //TODO: Disallow the form from being submitted if input is ONLY ""
                     firstName = ""
                     lastName = ""
                     birthDate = ""
@@ -141,12 +140,12 @@ fun ShowMoreButton(client: Client) {
     Button(
         onClick = { expanded.value = true }
     ) {
-        Text("Show More")
+        Text(text = client.getFirstName())
     }
 
     // Display additional content when the button is clicked
     if (expanded.value) {
-        Text(text = client.getBirthDate())
+        Text(text = client.getFirstName() + " " + client.getLastName() + "'s birth day is " + client.getBirthDate())
     }
 }
 
@@ -155,7 +154,9 @@ fun isValidName(name: String): Boolean {
 }
 
 fun isValidBirthDate(birthDate: String): Boolean {
-    return birthDate.matches(Regex("^(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(19|20)\\d{2}\$\n"))
+    //the below regular expression may not be ideal, but it appears to work and that's what matters for now
+    val birthDateRegex = """^(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(19|20)[0-9][0-9]"""
+    return birthDate.matches(Regex(birthDateRegex))
 }
 
 //use this to validate all inputted client info at once when doing the final button click needed to "create" a new client
