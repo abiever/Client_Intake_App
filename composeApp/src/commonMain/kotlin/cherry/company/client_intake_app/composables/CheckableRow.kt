@@ -15,10 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CheckableRow() {
+fun CheckableRow(checkedState: MutableList<Boolean>) {
     MaterialTheme {
         val options = listOf("Option 1", "Option 2", "Option 3") // Add more options as needed
-        val checkedState = remember { mutableStateListOf<Boolean>().apply { repeat(options.size) { add(false) } } }
+        //The below line of code was necessary to recompile
+        checkedState.apply { repeat(options.size) { add(false) } }
 
         Column {
             options.forEachIndexed { index, option ->
