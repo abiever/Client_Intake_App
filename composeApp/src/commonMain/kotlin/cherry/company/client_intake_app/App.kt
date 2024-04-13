@@ -103,24 +103,6 @@ internal fun App() = AppTheme {
             modifier = Modifier.padding(20.dp)
         )
 
-        //Use this button to "save" the name to a field on the app for the time being
-        //val isClicked = remember { mutableStateOf(false) }
-        Button(modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = {
-                //isValidClientInfo() is used here to validate all client info at once
-                //prevents button click if data does not pass validation
-                if (isValidClientInfo(firstName, lastName, birthDate)) {
-                    val client = Client(firstName, lastName, birthDate)
-                    clientsList.add(client)
-                    //The below 'resets' the text fields with empty strings
-                    firstName = ""
-                    lastName = ""
-                    birthDate = ""
-                }
-            }) {
-            Text("Create Client")
-        }
-
         //TODO: Create a way to save this info & health issues to each instance of a Client()
         Text("How much did pain interfere with your enjoyment of life?")
         val radioOptions = listOf("Not at all", "A little bit", "Somewhat", "Quite a bit", "Very much")
@@ -153,6 +135,22 @@ internal fun App() = AppTheme {
         Text("Any general health issues?")
         CheckableRow()
 
+        Button(modifier = Modifier.align(Alignment.CenterHorizontally),
+            onClick = {
+                //isValidClientInfo() is used here to validate all client info at once
+                //prevents button click if data does not pass validation
+                if (isValidClientInfo(firstName, lastName, birthDate)) {
+                    val client = Client(firstName, lastName, birthDate, selectedOption)
+                    clientsList.add(client)
+                    //The below 'resets' the text fields with empty strings
+                    firstName = ""
+                    lastName = ""
+                    birthDate = ""
+                }
+            }) {
+            Text("Create Client")
+        }
+
         if (clientsList.isNotEmpty()) {
             for (client in clientsList) {
                 // Use a composable function to create the button
@@ -178,7 +176,11 @@ fun ShowMoreButton(client: Client) {
 
     // Display additional content when the button is clicked
     if (expanded.value) {
-        Text(text = client.getFirstName() + " " + client.getLastName() + "'s birthday is " + client.getBirthDate())
+        Text(text = client.getFirstName() + " " +
+                    client.getLastName() + "'s birthday is " +
+                    client.getBirthDate() + " and their initial pain was " +
+                    client.getInitialPain()
+        )
     }
 }
 
@@ -221,6 +223,5 @@ fun CheckableRow() {
         }
     }
 }
-
 
 internal expect fun openUrl(url: String?)
