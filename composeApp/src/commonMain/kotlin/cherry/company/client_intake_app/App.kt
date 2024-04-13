@@ -11,13 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import cherry.company.client_intake_app.composables.ShowMoreButton
 import client_intake_app.composeapp.generated.resources.*
 import cherry.company.client_intake_app.theme.AppTheme
 import cherry.company.client_intake_app.theme.LocalThemeIsDark
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.vectorResource
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import cherry.company.client_intake_app.composables.CheckableRow
 
 @Composable
 internal fun App() = AppTheme {
@@ -160,49 +160,6 @@ internal fun App() = AppTheme {
 
         //Todo: add dropdown and radio buttons
         //The data can be saved in the app or on the hosting machine itself for now
-    }
-}
-
-@Composable
-fun ShowMoreButton(client: Client) {
-    // State to track whether the button is clicked
-    val expanded = remember { mutableStateOf(false) }
-
-    Button(
-        onClick = { expanded.value = true }
-    ) {
-        Text(text = client.getFirstName())
-    }
-
-    // Display additional content when the button is clicked
-    if (expanded.value) {
-        Text(text = client.getFirstName() + " " +
-                    client.getLastName() + "'s birthday is " +
-                    client.getBirthDate() + " and their initial pain was " +
-                    client.getInitialPain()
-        )
-    }
-}
-
-@Composable
-fun CheckableRow() {
-    MaterialTheme {
-        val options = listOf("Option 1", "Option 2", "Option 3") // Add more options as needed
-        val checkedState = remember { mutableStateListOf<Boolean>().apply { repeat(options.size) { add(false) } } }
-
-        Column {
-            options.forEachIndexed { index, option ->
-                Row(
-                    Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                        .clickable(onClick = { checkedState[index] = !checkedState[index] })
-                ) {
-                    Text(option, Modifier.weight(1f))
-                    Checkbox(checked = checkedState[index], onCheckedChange = { checkedState[index] = it })
-                }
-            }
-        }
     }
 }
 
