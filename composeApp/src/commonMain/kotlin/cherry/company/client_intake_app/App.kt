@@ -105,14 +105,14 @@ internal fun App() = AppTheme {
 
         //TODO: Create a way to save this info & health issues to each instance of a Client()
         Text("How much did pain interfere with your enjoyment of life?")
-        val radioOptions = listOf("Not at all", "A little bit", "Somewhat", "Quite a bit", "Very much")
-        val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[1] ) }
+        val painOptions = listOf("Not at all", "A little bit", "Somewhat", "Quite a bit", "Very much")
+        val (selectedPain, onOptionSelected) = remember { mutableStateOf(painOptions[1] ) }
         Row {
-            radioOptions.forEach { text ->
+            painOptions.forEach { text ->
                 Row(
                     Modifier
                         .selectable(
-                            selected = (text == selectedOption),
+                            selected = (text == selectedPain),
                             onClick = {
                                 onOptionSelected(text)
                             }
@@ -120,7 +120,7 @@ internal fun App() = AppTheme {
                         .padding(vertical = 16.dp)
                 ) {
                     RadioButton(
-                        selected = (text == selectedOption),
+                        selected = (text == selectedPain),
                         onClick = { onOptionSelected(text) },
                     )
                     Text(
@@ -140,7 +140,7 @@ internal fun App() = AppTheme {
                 //isValidClientInfo() is used here to validate all client info at once
                 //prevents button click if data does not pass validation
                 if (isValidClientInfo(firstName, lastName, birthDate)) {
-                    val client = Client(firstName, lastName, birthDate, selectedOption)
+                    val client = Client(firstName, lastName, birthDate, selectedPain)
                     clientsList.add(client)
                     //The below 'resets' the text fields with empty strings
                     firstName = ""
@@ -182,24 +182,6 @@ fun ShowMoreButton(client: Client) {
                     client.getInitialPain()
         )
     }
-}
-
-fun isValidName(name: String): Boolean {
-    return name.matches(Regex("^[A-Za-z'-]{2,20}\$"))
-}
-
-fun isValidBirthDate(birthDate: String): Boolean {
-    //the below regular expression may not be ideal, but it appears to work and that's what matters for now
-    val birthDateRegex = """^(0?[1-9]|1[0-2])/(0?[1-9]|[12][0-9]|3[01])/(19|20)[0-9][0-9]"""
-    return birthDate.matches(Regex(birthDateRegex))
-}
-
-//use this to validate all inputted client info at once when doing the final button click needed to "create" a new client
-fun isValidClientInfo(firstName: String, lastName: String, birthDate: String): Boolean {
-    //Add validation function as needed below
-    return  isValidName(firstName) &&
-            isValidName(lastName) &&
-            isValidBirthDate(birthDate)
 }
 
 @Composable
