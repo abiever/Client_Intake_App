@@ -5,7 +5,7 @@ class Client(
     private var lastName: String,
     private var birthDate: String,
     private var initialPain: String, //or should this be Int?
-    private var initialHealthIssues: MutableList<Boolean>
+    private var initialHealthIssues: MutableList<String>
 ) {
     fun getFirstName(): String {
         return firstName
@@ -25,5 +25,10 @@ class Client(
 
     fun getInitialHealthIssues(): String {
         return initialHealthIssues.joinToString(separator = ", ")
+    }
+
+    fun setInitialHealthIssues(healthIssues: MutableList<String>) {
+        initialHealthIssues.clear()
+        initialHealthIssues.addAll(healthIssues)
     }
 }

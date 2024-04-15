@@ -13,24 +13,30 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cherry.company.client_intake_app.Client
 
 @Composable
-fun CheckableRow(checkedState: MutableList<Boolean>) {
+fun CheckableRow(healthIssues: List<String>, checkedHealthIssues: MutableList<String>) {
     MaterialTheme {
-        val options = listOf("Option 1", "Option 2", "Option 3") // Add more options as needed
-        //The below line of code was necessary to recompile
-        checkedState.apply { repeat(options.size) { add(false) } }
-
         Column {
-            options.forEachIndexed { index, option ->
+            healthIssues.forEach { healthIssue ->
                 Row(
-                    Modifier
+                    modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth()
-                        .clickable(onClick = { checkedState[index] = !checkedState[index] })
+                        .clickable(onClick = {
+                            if (checkedHealthIssues.contains(healthIssue)) {
+                                checkedHealthIssues.remove(healthIssue) // Unselect the health issue
+                            } else {
+                                checkedHealthIssues.add(healthIssue) // Select the health issue
+                            }
+                        })
                 ) {
-                    Text(option, Modifier.weight(1f))
-                    Checkbox(checked = checkedState[index], onCheckedChange = { checkedState[index] = it })
+                    Text(healthIssue, Modifier.weight(1f))
+                    Checkbox(
+                        checked = checkedHealthIssues.contains(healthIssue),
+                        onCheckedChange = { /* No operation */ }
+                    )
                 }
             }
         }
