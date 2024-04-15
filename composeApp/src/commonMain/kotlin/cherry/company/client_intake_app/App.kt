@@ -149,6 +149,7 @@ internal fun App() = AppTheme {
                     firstName = ""
                     lastName = ""
                     birthDate = ""
+                    checkedHealthIssues.clear()
                 }
             }) {
             Text("Create Client")

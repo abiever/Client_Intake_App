@@ -35,7 +35,13 @@ fun CheckableRow(healthIssues: List<String>, checkedHealthIssues: MutableList<St
                     Text(healthIssue, Modifier.weight(1f))
                     Checkbox(
                         checked = checkedHealthIssues.contains(healthIssue),
-                        onCheckedChange = { /* No operation */ }
+                        onCheckedChange = {
+                            if (it) {
+                                checkedHealthIssues.add(healthIssue) // Add the health issue if checked
+                            } else {
+                                checkedHealthIssues.remove(healthIssue) // Remove the health issue if unchecked
+                            }
+                        }
                     )
                 }
             }
