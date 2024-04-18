@@ -25,6 +25,7 @@ internal fun App() = AppTheme {
     val clientsList = remember { mutableStateListOf<Client>() } // Use mutableStateListOf instead of mutableListOf
     // State variable to hold the list size
 
+    //TODO: Move this down closer to where it's relevant?
     val healthIssues = listOf("Diabetes", "Hypertension", "Obesity")
     val checkedHealthIssues = remember { mutableStateListOf<String>() }
 
@@ -136,14 +137,23 @@ internal fun App() = AppTheme {
 
         //TODO: Add modifier to text to be "heading" size and edit options for health issues options
         Text("Any general health issues?")
+
         CheckableRow(healthIssues = healthIssues, checkedHealthIssues = checkedHealthIssues)
+        var issuesSize by remember { mutableStateOf(0) }
+        Text(text = checkedHealthIssues.size.toString())
 
         Button(modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
                 //isValidClientInfo() is used here to validate all client info at once
                 //prevents button click if data does not pass validation
                 if (isValidClientInfo(firstName, lastName, birthDate)) {
-                    val client = Client(firstName, lastName, birthDate, selectedPain, checkedHealthIssues)
+                    val client = Client(
+                            firstName,
+                            lastName,
+                            birthDate,
+                            selectedPain,
+                            checkedHealthIssues.toList()
+                    )
                     clientsList.add(client)
                     //The below 'resets' the text fields with empty strings
                     firstName = ""

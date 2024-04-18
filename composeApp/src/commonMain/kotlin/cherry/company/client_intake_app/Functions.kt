@@ -17,3 +17,7 @@ fun isValidClientInfo(firstName: String, lastName: String, birthDate: String): B
             isValidName(lastName) &&
             isValidBirthDate(birthDate)
 }
+
+//fun updateClientHealthIssues(client: Client, healthIssues: List<String>) {
+//    client.setInitialHealthIssues(healthIssues.toMutableList())
+//}

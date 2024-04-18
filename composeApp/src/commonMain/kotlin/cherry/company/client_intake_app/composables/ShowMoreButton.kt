@@ -23,8 +23,8 @@ fun ShowMoreButton(client: Client) {
         Text(text = client.getFirstName() + " " +
                 client.getLastName() + "'s birthday is " +
                 client.getBirthDate() + " and their initial pain was " +
-                client.getInitialPain() + "and their health issues included " +
-                client.getInitialHealthIssues()
+                client.getInitialPain() + " and their health issues included " +
+                client.getInitialHealthIssuesSize().toString() + " health issues."
         )
     }
 }
