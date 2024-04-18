@@ -139,8 +139,6 @@ internal fun App() = AppTheme {
         Text("Any general health issues?")
 
         CheckableRow(healthIssues = healthIssues, checkedHealthIssues = checkedHealthIssues)
-        var issuesSize by remember { mutableStateOf(0) }
-        Text(text = checkedHealthIssues.size.toString())
 
         Button(modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {

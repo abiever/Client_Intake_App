@@ -24,7 +24,7 @@ fun ShowMoreButton(client: Client) {
                 client.getLastName() + "'s birthday is " +
                 client.getBirthDate() + " and their initial pain was " +
                 client.getInitialPain() + " and their health issues included " +
-                client.getInitialHealthIssuesSize().toString() + " health issues."
+                client.getInitialHealthIssues()
         )
     }
 }
