@@ -25,7 +25,9 @@ internal fun App() = AppTheme {
     val clientsList = remember { mutableStateListOf<Client>() } // Use mutableStateListOf instead of mutableListOf
     // State variable to hold the list size
 
-    val checkedState = remember { mutableStateListOf<Boolean>() } // Declare checkedState here
+    //TODO: Move this down closer to where it's relevant?
+    val healthIssues = listOf("Diabetes", "Hypertension", "Obesity")
+    val checkedHealthIssues = remember { mutableStateListOf<String>() }
 
     //Insert row here?
     //TODO: Make 2 columns side by side, where one column displays the input fields, and the other displays already created clients
@@ -135,19 +137,27 @@ internal fun App() = AppTheme {
 
         //TODO: Add modifier to text to be "heading" size and edit options for health issues options
         Text("Any general health issues?")
-        CheckableRow(checkedState = checkedState)
+
+        CheckableRow(healthIssues = healthIssues, checkedHealthIssues = checkedHealthIssues)
 
         Button(modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick = {
                 //isValidClientInfo() is used here to validate all client info at once
                 //prevents button click if data does not pass validation
                 if (isValidClientInfo(firstName, lastName, birthDate)) {
-                    val client = Client(firstName, lastName, birthDate, selectedPain, checkedState)
+                    val client = Client(
+                            firstName,
+                            lastName,
+                            birthDate,
+                            selectedPain,
+                            checkedHealthIssues.toList()
+                    )
                     clientsList.add(client)
                     //The below 'resets' the text fields with empty strings
                     firstName = ""
                     lastName = ""
                     birthDate = ""
+                    checkedHealthIssues.clear()
                 }
             }) {
             Text("Create Client")

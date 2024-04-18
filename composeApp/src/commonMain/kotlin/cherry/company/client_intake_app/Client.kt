@@ -5,7 +5,7 @@ class Client(
     private var lastName: String,
     private var birthDate: String,
     private var initialPain: String, //or should this be Int?
-    private var initialHealthIssues: MutableList<Boolean>
+    private var initialHealthIssues: List<String>
 ) {
     fun getFirstName(): String {
         return firstName
@@ -26,4 +26,15 @@ class Client(
     fun getInitialHealthIssues(): String {
         return initialHealthIssues.joinToString(separator = ", ")
     }
+
+    //TODO: Use this to help figure out how/why the related List isn't 'increasing' in size
+    fun getInitialHealthIssuesSize(): Int {
+        //Just using this as a sanity check
+        return initialHealthIssues.size
+    }
+
+//    fun setInitialHealthIssues(healthIssues: List<String>) {
+//        initialHealthIssues.clear()
+//        initialHealthIssues.addAll(healthIssues)
+//    }
 }
