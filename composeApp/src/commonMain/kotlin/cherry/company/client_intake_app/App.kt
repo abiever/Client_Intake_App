@@ -18,19 +18,15 @@ import cherry.company.client_intake_app.theme.LocalThemeIsDark
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.vectorResource
 import cherry.company.client_intake_app.composables.CheckableRow
+import cherry.company.client_intake_app.composables.NewClientForm
 
 @Composable
 internal fun App() = AppTheme {
 
-    val clientsList = remember { mutableStateListOf<Client>() } // Use mutableStateListOf instead of mutableListOf
-    // State variable to hold the list size
-
-    //TODO: Move this down closer to where it's relevant?
-    val healthIssues = listOf("Diabetes", "Hypertension", "Obesity")
-    val checkedHealthIssues = remember { mutableStateListOf<String>() }
+    val clientsList = remember { mutableStateListOf<Client>() } //
 
     //Insert row here?
-    //TODO: Make 2 columns side by side, where one column displays the input fields, and the other displays already created clients
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,107 +57,8 @@ internal fun App() = AppTheme {
             }
         )
 
-        var firstName by remember { mutableStateOf(("")) }
-        TextField(
-            value = firstName,
-            label = { Text("Enter First Name:") },
-            singleLine = true,
-            onValueChange = { firstName = it },
-            isError = firstName.isNotEmpty() && !isValidName(firstName),
-            supportingText = {
-                if (firstName.isNotEmpty() && !isValidName(firstName)) {
-                    Text("Please enter a valid first name")
-                }
-            },
-            modifier = Modifier.padding(20.dp)
-        )
-
-        var lastName by remember { mutableStateOf(("")) }
-        TextField(
-            value = lastName,
-            label = { Text("Enter Last Name:") },
-            singleLine = true,
-            onValueChange = { lastName = it },
-            isError = lastName.isNotEmpty() && !isValidName(lastName),
-            supportingText = {
-                if (lastName.isNotEmpty() && !isValidName(lastName)) {
-                    Text("Please enter a valid last name")
-                }
-            },
-            modifier = Modifier.padding(20.dp)
-        )
-
-        var birthDate by remember { mutableStateOf(("")) }
-        TextField(
-            value = birthDate,
-            label = { Text("Date of Birth") },
-            placeholder = { Text("MM/DD/YYYY")},
-            singleLine = true,
-            onValueChange = { birthDate = it },
-            isError = birthDate.isNotEmpty() && !isValidBirthDate(birthDate),
-            supportingText = {
-                if (birthDate.isNotEmpty() && !isValidBirthDate(birthDate)) {
-                    Text("Please enter a valid birth date")
-                }
-            },
-            modifier = Modifier.padding(20.dp)
-        )
-
-        //TODO: Create a way to save this info & health issues to each instance of a Client()
-        Text("How much did pain interfere with your enjoyment of life?")
-        val painOptions = listOf("Not at all", "A little bit", "Somewhat", "Quite a bit", "Very much")
-        val (selectedPain, onOptionSelected) = remember { mutableStateOf(painOptions[1] ) }
-        Row {
-            painOptions.forEach { text ->
-                Row(
-                    Modifier
-                        .selectable(
-                            selected = (text == selectedPain),
-                            onClick = {
-                                onOptionSelected(text)
-                            }
-                        )
-                        .padding(vertical = 16.dp)
-                ) {
-                    RadioButton(
-                        selected = (text == selectedPain),
-                        onClick = { onOptionSelected(text) },
-                    )
-                    Text(
-                        text = text,
-                        modifier = Modifier.padding(start = 8.dp) // Adjust padding as needed
-                    )
-                }
-            }
-        }
-
-        //TODO: Add modifier to text to be "heading" size and edit options for health issues options
-        Text("Any general health issues?")
-
-        CheckableRow(healthIssues = healthIssues, checkedHealthIssues = checkedHealthIssues)
-
-        Button(modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = {
-                //isValidClientInfo() is used here to validate all client info at once
-                //prevents button click if data does not pass validation
-                if (isValidClientInfo(firstName, lastName, birthDate)) {
-                    val client = Client(
-                            firstName,
-                            lastName,
-                            birthDate,
-                            selectedPain,
-                            checkedHealthIssues.toList()
-                    )
-                    clientsList.add(client)
-                    //The below 'resets' the text fields with empty strings
-                    firstName = ""
-                    lastName = ""
-                    birthDate = ""
-                    checkedHealthIssues.clear()
-                }
-            }) {
-            Text("Create Client")
-        }
+        //Insert NewClientForm() here?
+        NewClientForm(clientsList)
 
         if (clientsList.isNotEmpty()) {
             for (client in clientsList) {
@@ -170,8 +67,6 @@ internal fun App() = AppTheme {
             }
         }
 
-        //Todo: add dropdown and radio buttons
-        //The data can be saved in the app or on the hosting machine itself for now
     }
 }
 
