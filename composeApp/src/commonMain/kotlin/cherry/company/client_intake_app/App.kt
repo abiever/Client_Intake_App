@@ -18,6 +18,7 @@ import cherry.company.client_intake_app.theme.LocalThemeIsDark
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.vectorResource
 import cherry.company.client_intake_app.composables.CheckableRow
+import cherry.company.client_intake_app.composables.DarkModeButton
 import cherry.company.client_intake_app.composables.NewClientForm
 
 @Composable
@@ -41,23 +42,8 @@ internal fun App() = AppTheme {
             style = MaterialTheme.typography.displayLarge
         )
 
-        var isDark by LocalThemeIsDark.current
-        val icon = remember(isDark) {
-            if (isDark) Res.drawable.ic_light_mode
-            else Res.drawable.ic_dark_mode
-        }
+        DarkModeButton()
 
-        ElevatedButton(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp).widthIn(min = 200.dp),
-            onClick = { isDark = !isDark },
-            content = {
-                Icon(vectorResource(icon), contentDescription = null)
-                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                Text("Switch Theme")
-            }
-        )
-
-        //Insert NewClientForm() here?
         NewClientForm(clientsList)
 
         if (clientsList.isNotEmpty()) {
