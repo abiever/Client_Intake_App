@@ -13,7 +13,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import client_intake_app.composeapp.generated.resources.*
 import cherry.company.client_intake_app.theme.AppTheme
 import org.jetbrains.compose.resources.Font
-import cherry.company.client_intake_app.screens.ClientListScreen
+import cherry.company.client_intake_app.screens.HomeScreen
 import cherry.company.client_intake_app.screens.NewClientFormScreen
 
 
@@ -32,6 +32,7 @@ internal fun App() = AppTheme {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        //TODO: create 'top nav menu/bar' and put it here?
         Text(
             text = "Cherry Healing Center", //This could be changed to something less hard-coded?
             fontFamily = FontFamily(Font(Res.font.IndieFlower_Regular)),
@@ -41,7 +42,7 @@ internal fun App() = AppTheme {
         //Figure out how to make this as a part of a "menu bar" or something so that its less obtrusive and more 'reusable'
         //DarkModeButton()
 
-        val screens = listOf(NewClientFormScreen(clientsList), ClientListScreen(clientsList))
+        val screens = listOf(NewClientFormScreen(clientsList), HomeScreen(clientsList))
 
         Navigator(screens)
 

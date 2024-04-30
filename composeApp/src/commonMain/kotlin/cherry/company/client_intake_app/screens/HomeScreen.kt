@@ -11,10 +11,9 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import cherry.company.client_intake_app.Client
 import cherry.company.client_intake_app.composables.ShowMoreButton
 
-//TODO: Eventually RENAME this to "Dashboard" or something like that?
 //This is going to be the main spot where clients are tracked/created/etc.
 
-data class ClientListScreen(val clientsList: MutableList<Client>) : Screen {
+data class HomeScreen(val clientsList: MutableList<Client>) : Screen {
     @Composable
     override fun Content() {
 
@@ -25,24 +24,23 @@ data class ClientListScreen(val clientsList: MutableList<Client>) : Screen {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-//            clientsList.forEach { client ->
-//                Button(
-//                    onClick = { onClientClicked(client) },
-//                    modifier = Modifier.padding(8.dp)
-//                ) {
-//                    Text("${client.getFirstName()} ${client.getLastName()}")
-//                }
-//            }
             if (clientsList.isNotEmpty()) {
                 for (client in clientsList) {
                     // Use a composable function to create the button
-                    ShowMoreButton(client = client)
+                    //ShowMoreButton(client = client)
+                    Button(
+                        onClick = {
+                            navigator.push(ClientProfileScreen(client, clientsList))
+                        }
+                    ) {
+                        Text(client.getFirstName() + " " + client.getLastName())
+                    }
                 }
                 //TODO: The below may be able to be turned into a Composable for reusability/editability
                 Button(
                     onClick = { navigator.push(NewClientFormScreen(clientsList))}
                 ) {
-                    Text("Create Client")
+                    Text("Add New Client")
                 }
             }
             if (clientsList.isEmpty()) {
@@ -50,7 +48,7 @@ data class ClientListScreen(val clientsList: MutableList<Client>) : Screen {
                 Button(
                     onClick = { navigator.push(NewClientFormScreen(clientsList))}
                 ) {
-                    Text("Create Client")
+                    Text("Add New Client")
                 }
             }
         }
