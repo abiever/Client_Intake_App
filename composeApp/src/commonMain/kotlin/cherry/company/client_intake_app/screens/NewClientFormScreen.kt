@@ -135,7 +135,7 @@ data class NewClientFormScreen(val clientsList: MutableList<Client>) : Screen {
                     lastName = ""
                     birthDate = ""
                     checkedHealthIssues.clear()
-                    navigator.push(ClientListScreen(clientsList))
+                    navigator.push(HomeScreen(clientsList))
                 }
             }) {
             Text("Create Client")

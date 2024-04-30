@@ -1,5 +1,6 @@
 package cherry.company.client_intake_app
 
+//TODO: Create ClientID member that is automatically created as a random number. This will be used to 'search' for each client when necessary
 class Client(
     private var firstName: String,
     private var lastName: String,
