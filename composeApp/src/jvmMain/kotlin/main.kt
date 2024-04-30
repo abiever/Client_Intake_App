@@ -14,6 +14,8 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
     ) {
         window.minimumSize = Dimension(850, 600)
+
+        //The below is the Composable App in its entirety passed to the JVM
         App()
     }
 }
