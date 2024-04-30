@@ -50,7 +50,7 @@ internal fun App() = AppTheme {
 
         //Navigator(NewClientFormScreen(clientsList))
 
-        val screens = listOf(ClientListScreen(clientsList), NewClientFormScreen(clientsList))
+        val screens = listOf(NewClientFormScreen(clientsList), ClientListScreen(clientsList))
 
         Navigator(screens)
 
