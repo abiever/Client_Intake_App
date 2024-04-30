@@ -32,6 +32,7 @@ internal fun App() = AppTheme {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        //TODO: create 'top nav menu/bar' and put it here?
         Text(
             text = "Cherry Healing Center", //This could be changed to something less hard-coded?
             fontFamily = FontFamily(Font(Res.font.IndieFlower_Regular)),
