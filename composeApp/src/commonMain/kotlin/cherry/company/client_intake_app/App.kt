@@ -19,8 +19,10 @@ import cherry.company.client_intake_app.theme.LocalThemeIsDark
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.resources.vectorResource
 import cherry.company.client_intake_app.composables.CheckableRow
+import cherry.company.client_intake_app.composables.ClientListScreen
 import cherry.company.client_intake_app.composables.DarkModeButton
 import cherry.company.client_intake_app.composables.NewClientFormScreen
+
 
 @Composable
 internal fun App() = AppTheme {
@@ -43,16 +45,14 @@ internal fun App() = AppTheme {
             style = MaterialTheme.typography.displayLarge
         )
 
-        DarkModeButton()
+        //Figure out how to make this as a part of a "menu bar" or something so that its less obtrusive and more 'reusable'
+        //DarkModeButton()
 
-        Navigator(NewClientFormScreen(clientsList))
+        //Navigator(NewClientFormScreen(clientsList))
 
-        if (clientsList.isNotEmpty()) {
-            for (client in clientsList) {
-                // Use a composable function to create the button
-                ShowMoreButton(client = client)
-            }
-        }
+        val screens = listOf(ClientListScreen(clientsList), NewClientFormScreen(clientsList))
+
+        Navigator(screens)
 
     }
 }

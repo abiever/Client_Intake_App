@@ -16,6 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import cherry.company.client_intake_app.Client
 import cherry.company.client_intake_app.isValidBirthDate
 import cherry.company.client_intake_app.isValidClientInfo
@@ -25,6 +27,8 @@ data class NewClientFormScreen(val clientsList: MutableList<Client>) : Screen {
 
     @Composable
     override fun Content() {
+
+        val navigator = LocalNavigator.currentOrThrow
 
         val healthIssues = listOf("Diabetes", "Hypertension", "Obesity")
         val checkedHealthIssues = remember { mutableStateListOf<String>() }
@@ -130,6 +134,7 @@ data class NewClientFormScreen(val clientsList: MutableList<Client>) : Screen {
                     lastName = ""
                     birthDate = ""
                     checkedHealthIssues.clear()
+                    navigator.push(ClientListScreen(clientsList))
                 }
             }) {
             Text("Create Client")
