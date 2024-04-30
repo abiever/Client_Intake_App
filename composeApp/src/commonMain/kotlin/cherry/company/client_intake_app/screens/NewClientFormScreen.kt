@@ -1,4 +1,4 @@
-package cherry.company.client_intake_app.composables
+package cherry.company.client_intake_app.screens
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -19,6 +19,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cherry.company.client_intake_app.Client
+import cherry.company.client_intake_app.composables.CheckableRow
 import cherry.company.client_intake_app.isValidBirthDate
 import cherry.company.client_intake_app.isValidClientInfo
 import cherry.company.client_intake_app.isValidName

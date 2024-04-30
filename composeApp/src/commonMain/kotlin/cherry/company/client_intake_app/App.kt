@@ -1,9 +1,7 @@
 package cherry.company.client_intake_app
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -12,16 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.Navigator
-import cherry.company.client_intake_app.composables.ShowMoreButton
 import client_intake_app.composeapp.generated.resources.*
 import cherry.company.client_intake_app.theme.AppTheme
-import cherry.company.client_intake_app.theme.LocalThemeIsDark
 import org.jetbrains.compose.resources.Font
-import org.jetbrains.compose.resources.vectorResource
-import cherry.company.client_intake_app.composables.CheckableRow
-import cherry.company.client_intake_app.composables.ClientListScreen
-import cherry.company.client_intake_app.composables.DarkModeButton
-import cherry.company.client_intake_app.composables.NewClientFormScreen
+import cherry.company.client_intake_app.screens.ClientListScreen
+import cherry.company.client_intake_app.screens.NewClientFormScreen
 
 
 @Composable
@@ -47,8 +40,6 @@ internal fun App() = AppTheme {
 
         //Figure out how to make this as a part of a "menu bar" or something so that its less obtrusive and more 'reusable'
         //DarkModeButton()
-
-        //Navigator(NewClientFormScreen(clientsList))
 
         val screens = listOf(NewClientFormScreen(clientsList), ClientListScreen(clientsList))
 

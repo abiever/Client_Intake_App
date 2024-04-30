@@ -1,15 +1,15 @@
-package cherry.company.client_intake_app.composables
+package cherry.company.client_intake_app.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cherry.company.client_intake_app.Client
+import cherry.company.client_intake_app.composables.ShowMoreButton
 
 //TODO: Eventually RENAME this to "Dashboard" or something like that?
 //This is going to be the main spot where clients are tracked/created/etc.
