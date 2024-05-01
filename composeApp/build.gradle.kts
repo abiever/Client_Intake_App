@@ -10,6 +10,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.buildConfig)
     alias(libs.plugins.sqlDelight)
+
+    // Enabled Realm Plugin
+    id("io.realm.kotlin")
 }
 
 kotlin {
@@ -51,9 +54,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.core)
             implementation(libs.composeIcons.featherIcons)
-            //The below was needed to finally get the settings to "see" Nav components
-            //implementation("org.jetbrains.androidx.navigation:navigation-compose:2.8.0-alpha01")
-            //implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
+            implementation("io.realm.kotlin:library-sync:1.11.0")
         }
 
         commonTest.dependencies {
