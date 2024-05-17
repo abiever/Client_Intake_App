@@ -23,6 +23,8 @@ import cherry.company.client_intake_app.composables.CheckableRow
 import cherry.company.client_intake_app.isValidBirthDate
 import cherry.company.client_intake_app.isValidClientInfo
 import cherry.company.client_intake_app.isValidName
+import io.realm.kotlin.ext.toRealmList
+import java.util.UUID
 
 data class NewClientFormScreen(val clientsList: MutableList<Client>) : Screen {
 
@@ -122,12 +124,16 @@ data class NewClientFormScreen(val clientsList: MutableList<Client>) : Screen {
                 //isValidClientInfo() is used here to validate all client info at once
                 //prevents button click if data does not pass validation
                 if (isValidClientInfo(firstName, lastName, birthDate)) {
+                    //TODO: figure out if I need to 'pass' this client to the Realm repo or keep them separate
+                    //TODO: Mixing of 'named' and 'positional' arguments??
+                    //https://www.baeldung.com/kotlin/default-named-arguments
                     val client = Client(
+                        _id = UUID.randomUUID().toString(),
                         firstName,
                         lastName,
                         birthDate,
                         selectedPain,
-                        checkedHealthIssues.toList()
+                        checkedHealthIssues.toRealmList()
                     )
                     clientsList.add(client)
                     //The below 'resets' the text fields with empty strings

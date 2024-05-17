@@ -14,6 +14,7 @@ ktor = "2.3.9"
 composeIcons = "1.1.0"
 sqlDelight = "2.0.1"
 navigationCompose = "2.7.7"
+playServicesAdsLite = "23.0.0"
 
 [libraries]
 
@@ -42,6 +43,7 @@ sqlDelight-driver-android = { module = "app.cash.sqldelight:android-driver", ver
 sqlDelight-driver-native = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
 sqlDelight-driver-js = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqlDelight" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+play-services-ads-lite = { group = "com.google.android.gms", name = "play-services-ads-lite", version.ref = "playServicesAdsLite" }
 
 [plugins]
 

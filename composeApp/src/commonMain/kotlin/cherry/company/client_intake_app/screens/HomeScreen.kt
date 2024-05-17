@@ -9,7 +9,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import cherry.company.client_intake_app.Client
-import cherry.company.client_intake_app.composables.ShowMoreButton
+
 
 //This is going to be the main spot where clients are tracked/created/etc.
 
@@ -33,7 +33,7 @@ data class HomeScreen(val clientsList: MutableList<Client>) : Screen {
                             navigator.push(ClientProfileScreen(client, clientsList))
                         }
                     ) {
-                        Text(client.getFirstName() + " " + client.getLastName())
+                        Text(client.firstName + " " + client.lastName)
                     }
                 }
                 //TODO: The below may be able to be turned into a Composable for reusability/editability

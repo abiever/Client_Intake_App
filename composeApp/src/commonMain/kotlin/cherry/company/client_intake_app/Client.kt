@@ -1,42 +1,68 @@
 package cherry.company.client_intake_app
 
-//TODO: Create ClientID member that is automatically created as a random number. This will be used to 'search' for each client when necessary
-class Client(
-    private var firstName: String,
-    private var lastName: String,
-    private var birthDate: String,
-    private var initialPain: String, //or should this be Int?
-    private var initialHealthIssues: List<String>
+import io.realm.kotlin.ext.realmListOf
+import io.realm.kotlin.types.RealmList
+import io.realm.kotlin.types.RealmObject
+import io.realm.kotlin.types.annotations.Ignore
+import io.realm.kotlin.types.annotations.PrimaryKey
+
+import org.mongodb.kbson.ObjectId
+
+
+class Client( /*is 'open' needed here?*/
+    @PrimaryKey /*Is this annotation allowed here?*/
+    var _id: String = "",
+    var firstName: String = "",
+    var lastName: String = "",
+    var birthDate: String = "",
+    var initialPain: String = "",
+    var initialHealthIssues: RealmList<String> = realmListOf()
+) : RealmObject {
+
+//    @PrimaryKey
+//    var _id: String = "" //This will be used by Realm and created automatically?
+//    var firstName: String = ""
+//    var lastName: String = ""
+//    var birthDate: String = ""
+//    var initialPain: String = ""//or should this be Int?
+//    var initialHealthIssues: List<String> = listOf() //<String> here?
+
     //TODO: add a member for 'Notes'? (something for when memos and whatnot are added to a specific client
-) {
-    fun getFirstName(): String {
-        return firstName
-    }
 
-    fun getLastName(): String {
-        return lastName
-    }
+    //TODO: ****IMPORTANT**** I may need to add an 'empty constructor' here as per the Realm workaround solution (mentioned in below URL)
+    //https://www.mongodb.com/docs/atlas/device-sdks/sdk/kotlin/realm-database/schemas/define-realm-object-model/#std-label-kotlin-define-object-model
 
-    fun getBirthDate(): String {
-        return birthDate
-    }
+    //constructor below (as mentioned above):
+    constructor(): this("", "", "", "", "", realmListOf())
 
-    fun getInitialPain(): String {
-        return initialPain
-    }
+    //***NOTE: It turns out getters/setters have no need to be explicitly stated in Kotlin
 
+//    fun getID(): String {
+//        return _id
+//    }
+//
+//    fun setID(_id: String) {
+//        this._id = _id
+//    }
+//
+//    fun getFirstName(): String {
+//        return firstName
+//    }
+//
+//    fun getLastName(): String {
+//        return lastName
+//    }
+//
+//    fun getBirthDate(): String {
+//        return birthDate
+//    }
+//
+//    fun getInitialPain(): String {
+//        return initialPain
+//    }
+//
     fun getInitialHealthIssues(): String {
         return initialHealthIssues.joinToString(separator = ", ")
     }
 
-    //TODO: Use this to help figure out how/why the related List isn't 'increasing' in size
-    fun getInitialHealthIssuesSize(): Int {
-        //Just using this as a sanity check
-        return initialHealthIssues.size
-    }
-
-//    fun setInitialHealthIssues(healthIssues: List<String>) {
-//        initialHealthIssues.clear()
-//        initialHealthIssues.addAll(healthIssues)
-//    }
 }

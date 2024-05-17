@@ -11,8 +11,10 @@ plugins {
     alias(libs.plugins.buildConfig)
     alias(libs.plugins.sqlDelight)
 
+//    kotlin("native.cocoapods")
+    //id("com.android.library")
     // Enabled Realm Plugin
-    id("io.realm.kotlin")
+    id("io.realm.kotlin") version "1.11.0" //'version' may not be needed here?
 }
 
 kotlin {
@@ -54,6 +56,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.ktor.core)
             implementation(libs.composeIcons.featherIcons)
+
             implementation("io.realm.kotlin:library-sync:1.11.0")
         }
 
@@ -121,6 +124,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.11"
     }
+}
+dependencies {
+    implementation(libs.play.services.ads.lite)
 }
 
 compose.desktop {

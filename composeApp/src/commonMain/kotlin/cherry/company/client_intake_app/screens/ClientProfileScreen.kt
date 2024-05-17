@@ -27,7 +27,7 @@ data class ClientProfileScreen(val client: Client, val clientsList: MutableList<
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = client.getFirstName() + " " + client.getLastName(),
+                text = client.firstName + " " + client.lastName,
                 style = TextStyle(
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
@@ -40,7 +40,7 @@ data class ClientProfileScreen(val client: Client, val clientsList: MutableList<
                     fontWeight = FontWeight.Bold
                 )
             )
-            Text(text = client.getBirthDate())
+            Text(text = client.birthDate)
             Text(
                 text = "Initial Pain:",
                 style = TextStyle(
@@ -48,7 +48,7 @@ data class ClientProfileScreen(val client: Client, val clientsList: MutableList<
                     fontWeight = FontWeight.Bold
                 )
             )
-            Text(text = client.getInitialPain())
+            Text(text = client.initialPain)
             Text(
                 text = "Initial Health Issues:",
                 style = TextStyle(
@@ -56,6 +56,7 @@ data class ClientProfileScreen(val client: Client, val clientsList: MutableList<
                     fontWeight = FontWeight.Bold
                 )
             )
+            //Text(text = client.initialHealthIssues)
             Text(text = client.getInitialHealthIssues())
 
             Button(
